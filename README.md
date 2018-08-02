@@ -1,4 +1,7 @@
 # Petomatic App backend code
+
+## API specification
+
 ### Staff
 #### GET - /staff - `List of all the staff with their email and password` 
 
