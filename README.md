@@ -1,2 +1,1 @@
-# petomatic-back
-Peterinar app backend
+# Petomatic App backend code
