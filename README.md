@@ -3,7 +3,7 @@
 ## API specification
 
 ### Staff
-#### GET - /staff - `List of all the staff with their email and password` 
+#### GET - /staff - `List of all the staff` 
 
 ```
 Returns:
