@@ -4,14 +4,49 @@ namespace App\Controllers;
 
 use App\Core\App;
 
-class PagesController
+class ClientController
 {
-    public function allTrainings()
+    public function allClients ()
     {
-        $trainings = App::get('database')->getAllTrainings("trainings");
-
-        return view('index', compact('trainings'));
+        $clients = App::get('database')->getAllClients("clients");
+        echo json_encode($clients);
     }
+  public function singleClient ($params)
+  {
+    $client = App::get('database')->getOneClient("clients", $params['clientId']);
+    echo json_encode($client);
+  }
+  public function addClient ()
+  {
+    $requestData = trim(file_get_contents("php://input"));
+    $parsedRequestData = json_decode($requestData, true);
+    var_dump($parsedRequestData);
+    App::get('database')->addNew('clients', $parsedRequestData);
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public function singleTraining()
     {
@@ -33,7 +68,7 @@ class PagesController
     public function storeTask()
     {
         App::get('database')->addNew("tasks", $_POST);
-        return redirect('/');
+
     }
 
     public function products()

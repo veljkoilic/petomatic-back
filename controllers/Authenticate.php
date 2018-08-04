@@ -1,57 +1,50 @@
 <?php
- 
+
 namespace App\Controllers;
 use \App\Core\App;
 
 class Authenticate {
-    public function signup()
-    {
-        return view('signup');
-    }
+  public function createuser(){
+    $requestData = trim(file_get_contents("php://input"));
+    $credentials = json_decode($requestData, true);
+    $credentials['password'] = $this->hash($credentials);
+    App::get('database')->addNew("staff", $credentials);
+  }
 
-    public function createuser(){
-        $credentials = $_POST;
-        $credentials['user_password'] = $this->hash($credentials);
-        App::get('database')->addNew("users", $credentials);
-        var_dump($credentials);
-        return redirect('/admin/login');
-    }
     private function hash($credentials){
-        $password = $credentials['user_password'];
-        $password = crypt($password, '$1$rasmusle$') . "\n";
-        return $password;
-        
+      $password = $credentials['password'];
+      $password = crypt($password, '$1$rasmusle$') . "\n";
+      return $password;
+
     }
 
-    public function login()
-    {
+    public function login(){
 
-        return view('login');
-    }
-    public function validate(){
-        $credentials = $_POST;
+      $requestData = trim(file_get_contents("php://input"));
+      $credentials = json_decode($requestData, true);
+
         $email = $credentials['email'];
-        $user = App::get('database')->getOneUser("users", $email);
-        if(!$user){
-            return redirect("/admin/login");
+
+        $staff = App::get('database')->getOneStaff("staff", $email);
+        if(!$staff){
+            echo "No such user";
         }
 
         $password = $this->hash($credentials);
+        if($password === $staff->password) {
+            $_SESSION['auth'] = $staff;
+            echo "Logged in";
 
-        if($password === $user->user_password) {
-            $_SESSION['auth'] = $user;
-            return redirect('/admin/trainings');
-            
         }else{
-            return redirect('/admin/login');
+            echo "wrong password";
         }
 
-
+var_dump($_SESSION['auth']);
     }
     public function logout()
     {
         unset($_SESSION["auth"]);
-        return redirect('/admin/login');
+        echo "Logged out";
     }
 
 }

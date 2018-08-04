@@ -12,17 +12,68 @@ class QueryBuilder
         $this->pdo = $pdo;
     }
 
-    public function getAll($table, $model = "")
-    {
-        $query = $this->pdo->prepare("SELECT * FROM {$table}");
-        $query->execute();
-
-        if($model) {
-            return $query->fetchAll(\PDO::FETCH_CLASS, $model);
-        } else {
-            return $query->fetchAll(\PDO::FETCH_OBJ);
-        }
+  public function addNew($table, $payload){
+    var_dump($payload);
+    $sql = sprintf("INSERT INTO %s (%s) VALUES (%s)",
+      $table,
+      implode(", ", array_keys($payload)),
+      ":" . implode(", :", array_keys($payload))
+    );
+    echo $sql;
+    $query = $this->pdo->prepare($sql);
+    if (($query->execute($payload)) === 1){
+      echo json_encode("Client successfully created");
     }
+  }
+
+  public function getAllClients($table, $model = "")
+  {
+    $query = $this->pdo->prepare("SELECT * FROM {$table}");
+    $query->execute();
+
+    if($model) {
+      return $query->fetchAll(\PDO::FETCH_CLASS, $model);
+    } else {
+      return $query->fetchAll(\PDO::FETCH_OBJ);
+    }
+  }
+
+  public function getOneClient($table, $id)
+  {
+    $query = $this->pdo->prepare("SELECT * FROM {$table} WHERE id = {$id}");
+    $query->execute();
+    return $query->fetch(\PDO::FETCH_OBJ);
+
+  }
+
+  public function getOneStaff($table, $email)
+  {
+    $query = $this->pdo->prepare("SELECT * FROM {$table} WHERE email = '{$email}'");
+    $query->execute();
+    return $query->fetch(\PDO::FETCH_OBJ);
+
+  }
+
+//  VUE STUFF IS ABOVE
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public function getAllTrainings($table)
     {
@@ -66,16 +117,7 @@ class QueryBuilder
 
     }
 
-    public function addNew($table, $payload)
-    {
-        $sql = sprintf("INSERT INTO %s (%s) VALUES (%s)",
-            $table,
-            implode(", ", array_keys($payload)),
-            ":" . implode(", :", array_keys($payload))
-            );
-        $query = $this->pdo->prepare($sql);
-        $query->execute($payload);
-    }
+
 
     public function addNewTraining($table, $payload)
     {
