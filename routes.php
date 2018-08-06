@@ -1,6 +1,7 @@
 <?php
+//TODO: Add functions for editing stuff
 //Staff routes
-$router->post('staff/login', 'Authenticate@login');
+$router->post('staff/login', 'Authenticate@login', false);
 $router->post('staff/logout', 'Authenticate@logout');
 $router->post('staff/create', 'Authenticate@createuser');
 
@@ -13,20 +14,15 @@ $router->post('clients', 'ClientController@addClient');
 //Pets routes
 $router->get('pets', 'PetsController@allPets');
 $router->get('pets/{petId}', 'PetsController@singlePet');
+$router->get('/client/pets/{clientID}', 'PetsController@getAllClientPets');
 $router->post('pets/{petId}', 'PetsController@editPet');
-$router->post('pets', 'VisitsController@addPet');
+$router->post('pets', 'PetsController@addPet');
 
 //Visit routes
 $router->get('visits', 'VisitsController@allVisits');
 $router->get('visits/{visitId}', 'VisitsController@singleVisit');
 $router->post('visits/{visitId}', 'VisitsController@editVisit');
 $router->post('visits', 'VisitsController@addVisit');
-
-//Pets routes
-$router->get('client/pets', 'PetsController@allPets');
-$router->get('client/pets/{petId}', 'PetsController@singlePet');
-$router->post('client/pets/{petId}', 'PetsController@editPet');
-$router->post('client/pets', 'VisitsController@addPet');
 
 
 

@@ -26,6 +26,7 @@ class Authenticate {
         $email = $credentials['email'];
 
         $staff = App::get('database')->getOneStaff("staff", $email);
+        var_dump($staff);
         if(!$staff){
             echo "No such user";
         }

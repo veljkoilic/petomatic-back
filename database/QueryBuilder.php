@@ -13,7 +13,6 @@ class QueryBuilder
     }
 
   public function addNew($table, $payload){
-    var_dump($payload);
     $sql = sprintf("INSERT INTO %s (%s) VALUES (%s)",
       $table,
       implode(", ", array_keys($payload)),
@@ -22,13 +21,27 @@ class QueryBuilder
     echo $sql;
     $query = $this->pdo->prepare($sql);
     if (($query->execute($payload)) === 1){
-      echo json_encode("Client successfully created");
+      echo json_encode("Successfully created");
+    }else{
+      echo "<br> Error: Database not updated";
+      var_dump($query->errorInfo());
     }
   }
 
-  public function getAllClients($table, $model = "")
+  public function getAll($table, $model = "")
+{
+  $query = $this->pdo->prepare("SELECT * FROM {$table}");
+  $query->execute();
+
+  if($model) {
+    return $query->fetchAll(\PDO::FETCH_CLASS, $model);
+  } else {
+    return $query->fetchAll(\PDO::FETCH_OBJ);
+  }
+}
+  public function getAllVisits($table, $date, $model = "")
   {
-    $query = $this->pdo->prepare("SELECT * FROM {$table}");
+    $query = $this->pdo->prepare("SELECT date , breed_name, client_name, client_lastname, client_photo, diagnosis, long_description, pet_name, pet_photo, photo, short_description, species, staff_name, staff_lastname, type FROM {$table} LEFT JOIN clients ON visits.clients_id = clients.id LEFT JOIN pets ON pets.clients_id = clients.id LEFT JOIN breeds ON pets.breed_id = breeds.id LEFT JOIN staff ON visits.staff_id = staff.id LEFT JOIN types ON visits.type_id = types.id WHERE visits.date = '{$date}'");
     $query->execute();
 
     if($model) {
@@ -38,11 +51,20 @@ class QueryBuilder
     }
   }
 
-  public function getOneClient($table, $id)
+  public function getOne($table, $id)
   {
     $query = $this->pdo->prepare("SELECT * FROM {$table} WHERE id = {$id}");
     $query->execute();
     return $query->fetch(\PDO::FETCH_OBJ);
+
+  }
+
+  public function getClientsPets($table, $client_id)
+  {
+    $query = $this->pdo->prepare("SELECT pet_name FROM {$table} WHERE clients_id = {$client_id}");
+    echo $query;
+    $query->execute();
+    return $query->fetchAll(\PDO::FETCH_OBJ);
 
   }
 

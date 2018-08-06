@@ -6,14 +6,14 @@ use App\Core\App;
 
 class ClientController
 {
-    public function allClients ()
-    {
-        $clients = App::get('database')->getAllClients("clients");
-        echo json_encode($clients);
-    }
+  public function allClients ()
+  {
+      $clients = App::get('database')->getAll("clients");
+      echo json_encode($clients);
+  }
   public function singleClient ($params)
   {
-    $client = App::get('database')->getOneClient("clients", $params['clientId']);
+    $client = App::get('database')->getOne("clients", $params);
     echo json_encode($client);
   }
   public function addClient ()

@@ -26,7 +26,6 @@ class Router
       if($route[1]) {
         if(isset($_SESSION['auth'])){
           $this->callAction(...explode('@', $route[0]));
-
         }else{
           json_encode('login failed');
         }
@@ -57,25 +56,17 @@ class Router
       if (count($uriParts) !== count($routeParts)) {
         continue;
       }
-      $matched = false;
       for ($i = 0; $i < count($uriParts); $i++) {
         if ($uriParts[$i] === $routeParts[$i]) {
-          $matched = true;
           continue;
         }
-        if (false !== strpos($routeParts[$i], '{') && $uriParts[$i-1] === $routeParts[$i-1]) {
-          $paramName = trim($routeParts[$i],'{\}');
-          $matched = true;
-          $routeData['parameters'][$paramName] = $uriParts[$i];
+        if (false !== strpos($routeParts[$i], '{')) {
+          $routeData['parameters'][] = $uriParts[$i];
           continue;
         }
-        else {
-          $matched = false;
-        }
+        continue 2;
       }
-      if ($matched) {
-        return $routeData;
-      }
+      return $routeData;
     }
     return null;
   }
@@ -85,6 +76,10 @@ class Router
     if(!method_exists($c, $method)) {
       throw new \Exception('No method');
     }
-    return $c->$method($params);
+    if (is_array($params) || $params instanceof \Traversable) {
+      return $c->$method(...$params);
+    } else {
+      return $c->$method();
+    }
   }
 }

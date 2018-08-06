@@ -9,7 +9,9 @@ class ComposerStaticInitc0e7a929780ec1ee0f3024efd98691cf
     public static $classMap = array (
         'App\\Controllers\\Authenticate' => __DIR__ . '/../..' . '/controllers/Authenticate.php',
         'App\\Controllers\\ClientController' => __DIR__ . '/../..' . '/controllers/ClientController.php',
+        'App\\Controllers\\PetsController' => __DIR__ . '/../..' . '/controllers/PetsController.php',
         'App\\Controllers\\ProductsController' => __DIR__ . '/../..' . '/controllers/ProductsController.php',
+        'App\\Controllers\\VisitsController' => __DIR__ . '/../..' . '/controllers/VisitsController.php',
         'App\\Core\\App' => __DIR__ . '/../..' . '/core/App.php',
         'App\\Core\\Request' => __DIR__ . '/../..' . '/core/Request.php',
         'App\\Core\\Router' => __DIR__ . '/../..' . '/core/Router.php',
