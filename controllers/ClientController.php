@@ -23,6 +23,13 @@ class ClientController
     var_dump($parsedRequestData);
     App::get('database')->addNew('clients', $parsedRequestData);
   }
+  public function editClient ()
+  {
+    $requestData = trim(file_get_contents("php://input"));
+    $parsedRequestData = json_decode($requestData, true);
+    var_dump($parsedRequestData);
+    App::get('database')->editClient('clients', $parsedRequestData);
+  }
 
 
 

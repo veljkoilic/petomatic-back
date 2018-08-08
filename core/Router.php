@@ -39,8 +39,6 @@ class Router
           $this->callAction($route['controller'], $route['action']);
         }
       }
-    } else {
-//      require "views/404.view.php";
     }
   }
   /**

@@ -6,10 +6,15 @@ use App\Core\App;
 
 class VisitsController
 {
-  public function allVisits ()
+  public function todaysVisits ()
   {
     $date = date("Y-m-d", time());
-    $visits = App::get('database')->getAllVisits("visits", $date);
+    $visits = App::get('database')->getAllVisitsToday("visits", $date);
+    echo json_encode($visits);
+  }
+  public function allVisits ()
+  {
+    $visits = App::get('database')->getAllVisits("visits");
     echo json_encode($visits);
   }
   public function singleVisit ($params)

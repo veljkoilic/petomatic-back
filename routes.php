@@ -14,16 +14,19 @@ $router->post('clients', 'ClientController@addClient');
 //Pets routes
 $router->get('pets', 'PetsController@allPets');
 $router->get('pets/{petId}', 'PetsController@singlePet');
-$router->get('/client/pets/{clientID}', 'PetsController@getAllClientPets');
+$router->get('client/pets/{clientID}', 'PetsController@getAllClientPets');
 $router->post('pets/{petId}', 'PetsController@editPet');
 $router->post('pets', 'PetsController@addPet');
+$router->get('pet/visits/{petId}', 'PetsController@getAllPetsVisits');
 
 //Visit routes
 $router->get('visits', 'VisitsController@allVisits');
+$router->get('visits/today', 'VisitsController@todaysVisits');
 $router->get('visits/{visitId}', 'VisitsController@singleVisit');
 $router->post('visits/{visitId}', 'VisitsController@editVisit');
 $router->post('visits', 'VisitsController@addVisit');
 
+$router->get('breeds', 'PetsController@breeds');
 
 
 
