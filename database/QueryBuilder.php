@@ -27,7 +27,7 @@ class QueryBuilder
     }
   }
   public function addNewPet($table, $payload){
-    $query = $this->pdo->prepare("INSERT INTO {$table} (pet_name, species, pet_photo, breed_id, clients_id) VALUES ({$payload['pet_name']}, {$payload['species']}, {$payload['pet_photo']}, {$payload['breed_id']}, SELECT id FROM clients ORDER BY id DESC LIMIT 1");
+    $query = $this->pdo->prepare("INSERT INTO {$table} (pet_name, species, pet_photo, breed_id, clients_id) VALUES ('{$payload['pet_name']}', '{$payload['species']}', '{$payload['pet_photo']}', {$payload['breed_id']}, {$payload['clients_id']})");
     var_dump($query);
     if ($query->execute($payload)){
       echo json_encode("Successfully created");
@@ -104,7 +104,16 @@ class QueryBuilder
 
   }
   public function editClient($table, $payload){
-    $query = $this->pdo->prepare("UPDATE {$table} SET client_name = '{$payload['client_name']}', client_lastname = '{$payload['client_lastname']}', client_photo = '{$payload['client_photo']}' WHERE id = {$payload['id']} ");
+  $query = $this->pdo->prepare("UPDATE {$table} SET client_name = '{$payload['client_name']}', client_lastname = '{$payload['client_lastname']}', client_photo = '{$payload['client_photo']}' WHERE id = {$payload['id']} ");
+  if ($query->execute($payload)){
+    echo json_encode("Successfully updated");
+  }else{
+    echo "<br> Error: Database not updated";
+    var_dump($query->errorInfo());
+  }
+}
+  public function editPet($table, $payload){
+    $query = $this->pdo->prepare("UPDATE {$table} SET pet_name = '{$payload['pet_name']}', species = '{$payload['species']}', pet_photo = '{$payload['client_photo']}' WHERE id = {$payload['id']} ");
     if ($query->execute($payload)){
       echo json_encode("Successfully updated");
     }else{

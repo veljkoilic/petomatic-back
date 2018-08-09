@@ -29,6 +29,11 @@ class VisitsController
     var_dump($parsedRequestData);
     App::get('database')->addNew('visits', $parsedRequestData);
   }
+  public function type ()
+  {
+    $types = App::get('database')->getAll("types");
+    echo json_encode($types);
+  }
 
 
 

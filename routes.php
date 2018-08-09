@@ -1,5 +1,4 @@
 <?php
-//TODO: Add functions for editing stuff
 //Staff routes
 $router->post('staff/login', 'Authenticate@login', false);
 $router->post('staff/logout', 'Authenticate@logout');
@@ -12,7 +11,7 @@ $router->post('clients/{clientId}', 'ClientController@editClient');
 $router->post('clients', 'ClientController@addClient');
 
 //Pets routes
-$router->get('pets', 'PetsController@allPets');
+$router->get('pets', 'PetsController@getAllPets');
 $router->get('pets/{petId}', 'PetsController@singlePet');
 $router->get('client/pets/{clientID}', 'PetsController@getAllClientPets');
 $router->post('pets/{petId}', 'PetsController@editPet');
@@ -27,7 +26,7 @@ $router->post('visits/{visitId}', 'VisitsController@editVisit');
 $router->post('visits', 'VisitsController@addVisit');
 
 $router->get('breeds', 'PetsController@breeds');
-
+$router->get('types', 'VisitsController@type');
 
 
 

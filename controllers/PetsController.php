@@ -6,6 +6,11 @@ use App\Core\App;
 
 class PetsController
 {
+  public function getAllPets ()
+  {
+    $pets = App::get('database')->getAll("pets");
+    echo json_encode($pets);
+  }
   public function getAllClientPets ($params)
   {
     $pets = App::get('database')->getClientsPets("pets", $params);
@@ -29,6 +34,13 @@ class PetsController
     $parsedRequestData = json_decode($requestData, true);
     var_dump($parsedRequestData);
     App::get('database')->addNewPet('pets', $parsedRequestData);
+  }
+  public function editPet ()
+  {
+    $requestData = trim(file_get_contents("php://input"));
+    $parsedRequestData = json_decode($requestData, true);
+    var_dump($parsedRequestData);
+    App::get('database')->editPet('pets', $parsedRequestData);
   }
   public function breeds ()
   {
