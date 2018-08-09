@@ -20,6 +20,9 @@ class ClientController
   {
     $requestData = trim(file_get_contents("php://input"));
     $parsedRequestData = json_decode($requestData, true);
+    $parsedRequestData['client_name'] = filter_var($parsedRequestData['client_name'], FILTER_SANITIZE_STRING);
+    $parsedRequestData['client_lastname'] = filter_var($parsedRequestData['client_lastname'], FILTER_SANITIZE_STRING);
+    $parsedRequestData['client_photo'] = filter_var($parsedRequestData['client_photo'], FILTER_SANITIZE_STRING);
     var_dump($parsedRequestData);
     App::get('database')->addNew('clients', $parsedRequestData);
   }
@@ -27,61 +30,10 @@ class ClientController
   {
     $requestData = trim(file_get_contents("php://input"));
     $parsedRequestData = json_decode($requestData, true);
+    $parsedRequestData['client_name'] = filter_var($parsedRequestData['client_name'], FILTER_SANITIZE_STRING);
+    $parsedRequestData['client_lastname'] = filter_var($parsedRequestData['client_lastname'], FILTER_SANITIZE_STRING);
+    $parsedRequestData['client_photo'] = filter_var($parsedRequestData['client_photo'], FILTER_SANITIZE_STRING);
     var_dump($parsedRequestData);
     App::get('database')->editClient('clients', $parsedRequestData);
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public function singleTraining()
-    {
-        $training = App::get('database')->getOneTraining("trainings", $_GET['id']);
-
-        return view('singleTraining', compact('training'));
-    }
-
-    public function contact()
-    {
-        return view('contact');
-    }
-
-    public function aboutUs()
-    {
-        return view('about');
-    }
-
-    public function storeTask()
-    {
-        App::get('database')->addNew("tasks", $_POST);
-
-    }
-
-    public function products()
-    {
-        $products = App::get('database')->getAll("products");
-
-        return view('products', compact('products'));
-    }
 }

@@ -39,6 +39,12 @@ class PetsController
   {
     $requestData = trim(file_get_contents("php://input"));
     $parsedRequestData = json_decode($requestData, true);
+    $parsedRequestData['pet_name'] = filter_var($parsedRequestData['pet_name'], FILTER_SANITIZE_STRING);
+    $parsedRequestData['species'] = filter_var($parsedRequestData['species'], FILTER_SANITIZE_STRING);
+    $parsedRequestData['pet_photo'] = filter_var($parsedRequestData['pet_photo'], FILTER_SANITIZE_STRING);
+    $parsedRequestData['breed_id'] = filter_var($parsedRequestData['breed_id'], FILTER_SANITIZE_NUMBER_INT);
+    $parsedRequestData['clients_id'] = filter_var($parsedRequestData['clients_id'], FILTER_SANITIZE_NUMBER_INT);
+
     var_dump($parsedRequestData);
     App::get('database')->editPet('pets', $parsedRequestData);
   }
@@ -47,58 +53,13 @@ class PetsController
     $breeds = App::get('database')->getAll("breeds");
     echo json_encode($breeds);
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  public function singleTraining()
+  public function addBreed ()
   {
-    $training = App::get('database')->getOneTraining("trainings", $_GET['id']);
+    $requestData = trim(file_get_contents("php://input"));
+    $parsedRequestData = json_decode($requestData, true);
+    $parsedRequestData['breed_name'] = filter_var($parsedRequestData['breed_name'], FILTER_SANITIZE_STRING);
+    App::get('database')->addNew("breeds", $parsedRequestData);
 
-    return view('singleTraining', compact('training'));
-  }
-
-  public function contact()
-  {
-    return view('contact');
-  }
-
-  public function aboutUs()
-  {
-    return view('about');
-  }
-
-  public function storeTask()
-  {
-    App::get('database')->addNew("tasks", $_POST);
-
-  }
-
-  public function products()
-  {
-    $products = App::get('database')->getAll("products");
-
-    return view('products', compact('products'));
   }
 }
 

@@ -26,7 +26,7 @@ class Authenticate {
         $email = $credentials['email'];
 
         $staff = App::get('database')->getOneStaff("staff", $email);
-        var_dump($staff);
+
         if(!$staff){
             echo "No such user";
         }
@@ -34,13 +34,11 @@ class Authenticate {
         $password = $this->hash($credentials);
         if($password === $staff->password) {
             $_SESSION['auth'] = $staff;
-            echo "Logged in";
+
 
         }else{
             echo "wrong password";
         }
-
-var_dump($_SESSION['auth']);
     }
     public function logout()
     {
