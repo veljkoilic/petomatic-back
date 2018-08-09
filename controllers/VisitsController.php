@@ -27,8 +27,8 @@ class VisitsController
     $requestData = trim(file_get_contents("php://input"));
     $parsedRequestData = json_decode($requestData, true);
     $parsedRequestData['date'] = filter_var($parsedRequestData['date'], FILTER_SANITIZE_STRING);
-    $parsedRequestData['long_descritpion'] = filter_var($parsedRequestData['long_descritpion'], FILTER_SANITIZE_STRING);
-    $parsedRequestData['short_descritpion'] = filter_var($parsedRequestData['short_descritpion'], FILTER_SANITIZE_STRING);
+    $parsedRequestData['long_description'] = filter_var($parsedRequestData['long_description'], FILTER_SANITIZE_STRING);
+    $parsedRequestData['short_description'] = filter_var($parsedRequestData['short_description'], FILTER_SANITIZE_STRING);
     $parsedRequestData['diagnosis'] = filter_var($parsedRequestData['diagnosis'], FILTER_SANITIZE_STRING);
     $parsedRequestData['photo'] = filter_var($parsedRequestData['photo'], FILTER_SANITIZE_STRING);
     $parsedRequestData['pet_id'] = filter_var($parsedRequestData['pet_id'], FILTER_SANITIZE_NUMBER_INT);

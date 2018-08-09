@@ -1,4 +1,15 @@
-# Petomatic App backend code
+# Peterinar App back-end
+
+> Veterinarian Clinic app Back-end done in PHP lets you create read and update clients, their pets and lets you control the visits to the clinic. Each segment of the app has its own controller, and calls to the database are made in the query builder.
+
+## Build Setup
+
+ First you need to install the project dependencies using 
+`composer install`
+
+Serve the app on localhost:8080 `php -S localhost:8080`
+
+
 
 ## API specification
 
@@ -375,3 +386,4 @@ responses:
 }
 
 ```
+>Made by Veljko Ilic 2018.
